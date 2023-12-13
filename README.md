@@ -156,14 +156,16 @@ service: google_home.delete_alarm
 data:
   entity_id: sensor.kitchen_alarms
   timer_id: alarm/47dc1fa0-5ec0-2cc7-9ead-a94b85e22769
+  skip_refresh: true
 ```
 
 #### Key Descriptions
 
-| Key         | Example                                      | Description                                   |
-| ----------- | -------------------------------------------- | --------------------------------------------- |
-| `entity_id` | `sensor.kitchen_alarms`                      | Entity name of a Google Home alarms sensor.   |
-| `alarm_id`  | `alarm/6ed06a56-8a58-c6e3-a7d4-03f92c9d8a51` | ID of an alarm. See alarms description above. |
+| Key            | Example                                      | Description                                     |
+| -------------- | -------------------------------------------- | ----------------------------------------------- |
+| `entity_id`    | `sensor.kitchen_alarms`                      | Entity name of a Google Home alarms sensor.     |
+| `alarm_id`     | `alarm/6ed06a56-8a58-c6e3-a7d4-03f92c9d8a51` | ID of an alarm. See alarms description above.   |
+| `skip_refresh` | `true`                                       | Boolean to skip refreshing Google Home devices. |
 
 ### Delete timer
 
@@ -174,14 +176,16 @@ service: google_home.delete_timer
 data:
   entity_id: sensor.kitchen_timers
   timer_id: timer/47dc1fa0-5ec0-2cc7-9ead-a94b85e22769
+  skip_refresh: true
 ```
 
 #### Key Descriptions
 
-| Key         | Example                                      | Description                                  |
-| ----------- | -------------------------------------------- | -------------------------------------------- |
-| `entity_id` | `sensor.kitchen_timers`                      | Entity name of a Google Home timers sensor.  |
-| `timer_id`  | `timer/6ed06a56-8a58-c6e3-a7d4-03f92c9d8a51` | ID of a timer. See timers description above. |
+| Key            | Example                                      | Description                                     |
+| -------------- | -------------------------------------------- | ----------------------------------------------- |
+| `entity_id`    | `sensor.kitchen_timers`                      | Entity name of a Google Home timers sensor.     |
+| `timer_id`     | `timer/6ed06a56-8a58-c6e3-a7d4-03f92c9d8a51` | ID of a timer. See timers description above.    |
+| `skip_refresh` | `true`                                       | Boolean to skip refreshing Google Home devices. |
 
 ### Reboot device
 
@@ -201,11 +205,21 @@ data:
 | ----------- | ----------------------- | ------------------------------------------- |
 | `entity_id` | `sensor.kitchen_device` | Entity name of a Google Home device sensor. |
 
+### Refresh devices
+
+Note: Resets the timer for automatic polling to refresh devices.
+
+#### Example
+
+```yaml
+service: google_home.refresh_devices
+```
+
 ## Getting Started
 
 ### Prerequisites
 
-Use Home Assistant v2022.6.0 or above.
+Use Home Assistant v2023.2.0 or above.
 
 ### Google Account security
 
@@ -217,6 +231,16 @@ We encourage you to create a separate Google account and add it to your Google H
 Your second account would not have access to anything other than Google Home, so even if it
 gets compromised, it's not as severe as losing your main google account.
 See more discussion [here](https://github.com/leikoilja/ha-google-home/issues/124#issuecomment-921773489)
+
+### Master token
+
+Due to authentication issues with google credentials alone it may be required to get the master token separately and provide it during the setup process. This can be done using [this script](https://gist.github.com/rithvikvibhu/952f83ea656c6782fbd0f1645059055d) or [glocaltokens](https://github.com/leikoilja/glocaltokens#quickstart) package.
+
+Since there are several issues getting the token reliable on different environments, you can use a docker container which was created solely for this use: <https://hub.docker.com/r/breph/ha-google-home_get-token>. If you choose to use this container, run the following command:
+
+```
+$ docker run --rm -it breph/ha-google-home_get-token
+```
 
 ### HACS Installation
 
@@ -404,14 +428,16 @@ Currently the integration supports the following languages:
 - Danish
 - Dutch
 - English
+- French
 - German (Germany)
 - Italian (Italy)
 - Norwegian (bokmål and nynorsk)
 - Polish
-- Portuguese (Portugal)
 - Portuguese (Brazil)
-- Spanish (Spain)
+- Portuguese (Portugal)
 - Russian
+- Slovak
+- Spanish (Spain)
 - Ukrainian
 
 If you want to translate the project to your own language, follow the [Localization guide](LOCALIZATION.md).
@@ -430,7 +456,7 @@ If you want to translate the project to your own language, follow the [Localizat
 [integration_blueprint]: https://github.com/custom-components/integration_blueprint
 [releases-shield]: https://img.shields.io/github/release/leikoilja/ha-google-home.svg?style=for-the-badge
 [releases]: https://github.com/leikoilja/ha-google-home/releases
-[workflow-shield]: https://img.shields.io/github/workflow/status/leikoilja/ha-google-home/Linting?style=for-the-badge
+[workflow-shield]: https://img.shields.io/github/actions/workflow/status/leikoilja/ha-google-home/linting.yaml?branch=master&style=for-the-badge
 [workflow]: https://github.com/leikoilja/ha-google-home/actions
 [installs-shield]: https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Frunkit.io%2Fkapji%2Fgoogle-home-installs-for-shield-io%2F3.0.0
 [installs]: https://analytics.home-assistant.io/custom_integrations.json

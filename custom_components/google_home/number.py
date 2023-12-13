@@ -24,6 +24,7 @@ from .const import (
     LABEL_ALARM_VOLUME,
 )
 from .entity import GoogleHomeBaseEntity
+from .models import GoogleHomeDevice
 
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
@@ -35,9 +36,9 @@ async def async_setup_entry(
 ) -> bool:
     """Setup switch platform."""
     client: GlocaltokensApiClient = hass.data[DOMAIN][entry.entry_id][DATA_CLIENT]
-    coordinator: DataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id][
-        DATA_COORDINATOR
-    ]
+    coordinator: DataUpdateCoordinator[list[GoogleHomeDevice]] = hass.data[DOMAIN][
+        entry.entry_id
+    ][DATA_COORDINATOR]
 
     numbers: list[NumberEntity] = []
     for device in coordinator.data:
@@ -94,11 +95,11 @@ class AlarmVolumeNumber(GoogleHomeBaseEntity, NumberEntity):
         volume = device.get_alarm_volume()
         return volume
 
-    async def async_set_native_value(self, value: int) -> None:
+    async def async_set_native_value(self, value: float) -> None:
         """Sets the alarm volume"""
         device = self.get_device()
         if device is None:
             _LOGGER.error("Device %s not found.", self.device_name)
             return
 
-        await self.client.update_alarm_volume(device=device, volume=value)
+        await self.client.update_alarm_volume(device=device, volume=round(value))
