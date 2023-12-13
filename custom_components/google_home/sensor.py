@@ -91,7 +91,7 @@ async def async_setup_entry(
                     client,
                     device.device_id,
                     device.name,
-                    device.device_model,
+                    device.hardware,
                 ),
             ]
     async_add_devices(sensors)
@@ -222,11 +222,15 @@ class GoogleHomeBTDevicesSensor(GoogleHomeBaseEntity):
         device = self.get_device()
         if not device:
             return None
-        closest_device = device.get_closest_device()
-        return closest_device.mac_address if closest_device else STATE_UNAVAILABLE
+        # closest_device = device.get_closest_device()
+        list_devices = device.get_sorted_bt_devices()
+        if list_devices:
+            return str([o.mac_address for o in list_devices])
+        # return closest_device.mac_address if closest_device else STATE_UNAVAILABLE
+        return STATE_UNAVAILABLE
 
     @property
-    def device_state_attributes(self) -> BTDeviceAttributes:
+    def extra_state_attributes(self) -> BTDeviceAttributes:
         """Return the state attributes."""
         return {
             "bt_devices": self._get_bt_device_data(),
