@@ -288,7 +288,6 @@ class GlocaltokensApiClient:
         )
 
         if response is not None:
-
             device.set_bt(cast(list[BTJsonDict], response))
 
             _LOGGER.info(

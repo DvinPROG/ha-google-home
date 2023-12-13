@@ -195,7 +195,6 @@ class GoogleHomeBTDevice:
         expected_profiles: int,
         name: str | None,
     ) -> None:
-
         self.mac_address = mac_address
         self.device_class = device_class
         self.device_type = device_type
