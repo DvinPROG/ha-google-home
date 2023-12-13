@@ -222,7 +222,6 @@ class GoogleHomeBTDevicesSensor(GoogleHomeBaseEntity):
         device = self.get_device()
         if not device:
             return None
-        closest_device = device.get_closest_device()
         # closest_device = device.get_closest_device()
         list_devices = device.get_sorted_bt_devices()
         if list_devices:
