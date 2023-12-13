@@ -72,6 +72,10 @@
     "refresh_devices": {
       "description": "De status van alle Google Home-apparaten verversen.",
       "name": "Apparaten verversen"
+    },
+    "update_bluetooth": {
+      "description": "Rescan Bluetooth",
+      "name": "Rescan Bluetooth"
     }
   }
 }

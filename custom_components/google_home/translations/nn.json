@@ -72,6 +72,10 @@
     "refresh_devices": {
       "description": "Oppdater statusen til alle Google heimeseiningar.",
       "name": "Oppdater einingar"
+    },
+    "update_bluetooth": {
+      "description": "Rescan Bluetooth",
+      "name": "Rescan Bluetooth"
     }
   }
 }

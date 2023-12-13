@@ -73,6 +73,10 @@
     "refresh_devices": {
       "description": "Actualisez l'état de tous les appareils Google Home.",
       "name": "Actualiser les appareils"
+    },
+    "update_bluetooth": {
+      "description": "Rescan Bluetooth",
+      "name": "Rescan Bluetooth"
     }
   }
 }
